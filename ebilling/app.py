@@ -698,7 +698,7 @@ with tab5:
     st.markdown("""
     **This prototype demonstrates how AI agents can automate legal e-billing workflows - from vendor onboarding to invoice verification to case assignment.**
     
-    Built by **Srini Narra** — [LinkedIn Profile](https://www.linkedin.com/in/srininarra/)
+    Built by **Srini Narra** — [LinkedIn Profile](https://www.linkedin.com/in/srinilegal)
     """)
     
     st.markdown("---")
