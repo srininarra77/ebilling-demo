@@ -214,7 +214,7 @@ def run_case_assignment():
             
             best_lawyer = candidates[0]["lawyer"]
             reasoning_steps.append(f"🎯 **Step 3: Select best candidate** → {selection_reason}")
-            reasoning_steps.append(f"✅ **Decision: Assign to {best_lawyer['name']}** ({best_lawyer['title']})")
+            reasoning_steps.append(f"✅ **Decision: Assign to {best_lawyer['name']}** ({best_lawyer.get('title', 'Counsel')})")
         
         if best_lawyer:
             assignment = {
@@ -226,7 +226,7 @@ def run_case_assignment():
                 "assigned_to": {
                     "lawyer_id": best_lawyer["lawyer_id"], 
                     "name": best_lawyer["name"],
-                    "title": best_lawyer["title"],
+                    "title": best_lawyer.get("title", "Counsel"),
                     "email": best_lawyer["email"]
                 }, 
                 "outside_counsel": matter.get("outside_counsel", ""),
@@ -313,13 +313,40 @@ with tab2:
     st.header("Agent 2: Invoice Verification")
     st.markdown("Verifies billed rates against contracted rates. Approves, flags, or rejects invoices.")
     
-    # Show invoices in human-readable form
-    st.subheader("📥 Invoices in AP Inbox")
+    # Check if we have verification results
+    ap_notifications = load_json(AP_NOTIFICATIONS_PATH)
+    
+    # Show invoices with verification status
+    st.subheader("📥 Invoices")
     invoices = load_json(INBOX_PATH)
+    
     if invoices:
         for inv in invoices:
-            with st.expander(f"📄 **{inv['invoice_id']}** | {inv['firm_name']} | ${inv['total_amount']:,.2f}", expanded=False):
-                # Invoice Header - like a real invoice
+            # Find verification result for this invoice
+            verification = None
+            if ap_notifications:
+                for n in ap_notifications["notifications"]:
+                    if n["invoice_id"] == inv["invoice_id"]:
+                        verification = n
+                        break
+            
+            # Set status icon based on verification
+            if verification:
+                if verification["status"] == "APPROVED":
+                    status_icon = "✅"
+                    status_text = "APPROVED"
+                elif verification["status"] == "FLAGGED":
+                    status_icon = "⚠️"
+                    status_text = "FLAGGED"
+                else:
+                    status_icon = "❌"
+                    status_text = "REJECTED"
+                header = f"{status_icon} **{inv['invoice_id']}** | {inv['firm_name']} | ${inv['total_amount']:,.2f} | {status_text}"
+            else:
+                header = f"📄 **{inv['invoice_id']}** | {inv['firm_name']} | ${inv['total_amount']:,.2f} | ⏳ Pending"
+            
+            with st.expander(header, expanded=False):
+                # Invoice Header
                 st.markdown("---")
                 col1, col2 = st.columns(2)
                 with col1:
@@ -336,7 +363,7 @@ with tab2:
                 st.markdown(f"**Matter ID:** {inv['matter_id']}")
                 st.markdown("---")
                 
-                # Line items as a proper invoice table
+                # Billing Details
                 st.markdown("**BILLING DETAILS:**")
                 for idx, item in enumerate(inv["line_items"], 1):
                     st.markdown(f"""
@@ -346,9 +373,43 @@ with tab2:
                     """)
                 
                 st.markdown("---")
-                col1, col2, col3 = st.columns(3)
+                col1, col2 = st.columns(2)
                 col1.metric("Total Hours", inv['total_hours'])
                 col2.metric("Total Amount", f"${inv['total_amount']:,.2f}")
+                
+                # Show verification result if available
+                if verification:
+                    st.markdown("---")
+                    st.markdown("### 🤖 Agent Verification Result")
+                    
+                    if verification["status"] == "APPROVED":
+                        st.success(f"**DECISION:** ✅ RELEASE PAYMENT")
+                        st.markdown(f"**Reason:** {verification.get('reason', 'All rates match contracted amounts')}")
+                        
+                        st.markdown("**Rate Verification:**")
+                        if "line_items" in verification:
+                            for item in verification["line_items"]:
+                                st.markdown(f"✅ **{item['timekeeper']}** ({item['level'].title()}): Billed ${item['billed_rate']}/hr = Contracted ${item['contracted_rate']}/hr → **OK**")
+                        
+                    elif verification["status"] == "FLAGGED":
+                        st.warning(f"**DECISION:** ⚠️ HOLD PAYMENT")
+                        st.error(f"**Total Overcharge:** ${verification.get('overcharge', 0):,.2f}")
+                        st.markdown(f"**Reason:** {verification.get('reason', 'Rate discrepancies detected')}")
+                        
+                        st.markdown("**Rate Verification:**")
+                        if "line_items" in verification:
+                            for item in verification["line_items"]:
+                                if item["status"] == "OK":
+                                    st.markdown(f"✅ **{item['timekeeper']}** ({item['level'].title()}): Billed ${item['billed_rate']}/hr = Contracted ${item['contracted_rate']}/hr → **OK**")
+                                else:
+                                    st.markdown(f"❌ **{item['timekeeper']}** ({item['level'].title()}): Billed ${item['billed_rate']}/hr ≠ Contracted ${item['contracted_rate']}/hr → **OVERCHARGE +${item.get('overcharge', 0):,.2f}**")
+                        
+                        st.markdown(f"**Recommended Action:** Request corrected invoice or approve adjusted amount of ${verification['amount'] - verification.get('overcharge', 0):,.2f}")
+                        
+                    else:  # REJECTED
+                        st.error(f"**DECISION:** ❌ DO NOT PAY")
+                        st.markdown(f"**Reason:** {verification.get('reason', 'Cannot process')}")
+                        st.markdown("**Recommended Action:** Return invoice to sender or contact vendor.")
     
     st.markdown("---")
     
@@ -378,61 +439,7 @@ with tab2:
                     st.warning(f"⚠️ Flagged: {len(results['flagged'])}")
                 if results["rejected"]:
                     st.error(f"❌ Rejected: {len(results['rejected'])}")
-    
-    # Show verification results
-    ap_notifications = load_json(AP_NOTIFICATIONS_PATH)
-    if ap_notifications:
-        st.markdown("---")
-        st.subheader("📬 Verification Results & AP Notifications")
-        
-        for n in ap_notifications["notifications"]:
-            if n["status"] == "APPROVED":
-                with st.expander(f"✅ **{n['invoice_id']}** | {n['firm_name']} | APPROVED - ${n['amount']:,.2f}", expanded=False):
-                    st.success(f"**DECISION:** ✅ RELEASE PAYMENT")
-                    st.markdown(f"**Amount:** ${n['amount']:,.2f}")
-                    st.markdown(f"**Reason:** {n.get('reason', 'All rates match contracted amounts')}")
-                    
-                    st.markdown("---")
-                    st.markdown("**🔍 Agent Verification Details:**")
-                    if "line_items" in n:
-                        for item in n["line_items"]:
-                            st.markdown(f"""
-✅ **{item['timekeeper']}** ({item['level'].title()})  
-Billed: ${item['billed_rate']}/hr | Contracted: ${item['contracted_rate']}/hr | **Status: OK**
-                            """)
-                        
-            elif n["status"] == "FLAGGED":
-                with st.expander(f"⚠️ **{n['invoice_id']}** | {n['firm_name']} | FLAGGED - ${n['amount']:,.2f}", expanded=True):
-                    st.warning(f"**DECISION:** ⚠️ HOLD PAYMENT")
-                    st.markdown(f"**Amount:** ${n['amount']:,.2f}")
-                    st.error(f"**Total Overcharge Detected:** ${n.get('overcharge', 0):,.2f}")
-                    st.markdown(f"**Reason:** {n.get('reason', 'Rate discrepancies detected')}")
-                    
-                    st.markdown("---")
-                    st.markdown("**🔍 Agent Verification Details:**")
-                    if "line_items" in n:
-                        for item in n["line_items"]:
-                            if item["status"] == "OK":
-                                st.markdown(f"""
-✅ **{item['timekeeper']}** ({item['level'].title()})  
-Billed: ${item['billed_rate']}/hr | Contracted: ${item['contracted_rate']}/hr | **Status: OK**
-                                """)
-                            else:
-                                st.markdown(f"""
-❌ **{item['timekeeper']}** ({item['level'].title()})  
-Billed: ${item['billed_rate']}/hr | Contracted: ${item['contracted_rate']}/hr | **OVERCHARGE: +${item.get('overcharge', 0):,.2f}**
-                                """)
-                    
-                    st.markdown("---")
-                    st.markdown("**📝 Recommended Action:** Request corrected invoice or approve adjusted amount of ${:,.2f}".format(n['amount'] - n.get('overcharge', 0)))
-                    
-            else:  # REJECTED
-                with st.expander(f"❌ **{n['invoice_id']}** | {n['firm_name']} | REJECTED - ${n['amount']:,.2f}", expanded=True):
-                    st.error(f"**DECISION:** ❌ DO NOT PAY")
-                    st.markdown(f"**Amount:** ${n['amount']:,.2f}")
-                    st.markdown(f"**Reason:** {n.get('reason', 'Cannot process')}")
-                    st.markdown("---")
-                    st.markdown("**📝 Recommended Action:** Return invoice to sender or contact vendor.")
+                st.rerun()
 
 # ============================================================
 # TAB 3: CASE ASSIGNMENT
@@ -441,12 +448,34 @@ with tab3:
     st.header("Agent 3: Case/Matter Assignment")
     st.markdown("Auto-assigns matters to internal lawyers based on practice area, expertise, and workload.")
     
+    # Check if we have assignments
+    assignments_db = load_json(ASSIGNMENTS_DB_PATH)
+    
+    # Create assignment lookup
+    assignment_lookup = {}
+    if assignments_db:
+        for a in assignments_db["assignments"]:
+            assignment_lookup[a["matter_id"]] = a
+    
     col1, col2 = st.columns(2)
     
     with col1:
-        st.subheader("📁 Matters to Assign")
+        st.subheader("📁 Matters")
         df = pd.read_csv(MATTERS_CSV)
-        st.dataframe(df[["matter_id", "matter_name", "case_type", "priority"]], use_container_width=True)
+        
+        # Add Assignee column
+        assignees = []
+        for _, row in df.iterrows():
+            matter_id = row["matter_id"]
+            if matter_id in assignment_lookup:
+                assignees.append(assignment_lookup[matter_id]["assigned_to"]["name"])
+            else:
+                assignees.append("⏳ Pending")
+        
+        df["Assignee"] = assignees
+        
+        # Display with Assignee column
+        st.dataframe(df[["matter_id", "matter_name", "case_type", "priority", "Assignee"]], use_container_width=True)
     
     with col2:
         st.subheader("🤖 Run Agent")
@@ -456,6 +485,7 @@ with tab3:
             st.success(f"✅ Assigned: {len(results['assigned'])} matters")
             if results["unassigned"]:
                 st.warning(f"⚠️ Unassigned: {len(results['unassigned'])}")
+            st.rerun()
     
     # Show lawyers in human-readable cards
     st.markdown("---")
@@ -470,7 +500,7 @@ with tab3:
                 
                 st.markdown(f"""
 **{status_color} {l['name']}**  
-*{l['title']}*  
+*{l.get('title', 'Counsel')}*  
 
 **Practice Areas:**  
 {', '.join(l['practice_areas'])}
@@ -481,8 +511,7 @@ with tab3:
                 st.markdown("---")
     
     # Show assignments with reasoning
-    assignments_db = load_json(ASSIGNMENTS_DB_PATH)
-    if assignments_db:
+    if assignments_db and assignments_db["assignments"]:
         st.markdown("---")
         st.subheader("📋 Assignment Decisions with Agent Reasoning")
         
@@ -503,7 +532,7 @@ with tab3:
                 with col2:
                     st.markdown("**👤 Assigned To:**")
                     st.markdown(f"- **Name:** {a['assigned_to']['name']}")
-                    st.markdown(f"- **Title:** {a['assigned_to']['title']}")
+                    st.markdown(f"- **Title:** {a['assigned_to'].get('title', 'Counsel')}")
                     st.markdown(f"- **Email:** {a['assigned_to']['email']}")
                 
                 st.markdown("---")
@@ -546,7 +575,7 @@ with tab4:
                 if l["status"] == "active":
                     workload_data.append({
                         "Lawyer": l["name"],
-                        "Title": l["title"],
+                        "Title": l.get("title", "Counsel"),
                         "Cases Assigned": l["current_caseload"],
                         "Max Capacity": l["max_caseload"],
                         "Available Slots": l["max_caseload"] - l["current_caseload"]
