@@ -696,15 +696,10 @@ with tab5:
     
     # Author Section
     st.markdown("""
-    <div class="author-box">
-    <h3>👤 Built by Srini Narra</h3>
-    <p><strong>Senior Legal Operations & CLM Leader</strong></p>
-    <p>20+ years of experience transforming legal departments through technology and process optimization.</p>
-    <p>
-    <a href="https://www.linkedin.com/in/srininarra/" target="_blank">🔗 Connect on LinkedIn</a>
-    </p>
-    </div>
-    """, unsafe_allow_html=True)
+    **This prototype demonstrates how AI agents can automate legal e-billing workflows - from vendor onboarding to invoice verification to case assignment.**
+    
+    Built by **Srini Narra** — [LinkedIn Profile](https://www.linkedin.com/in/srininarra/)
+    """)
     
     st.markdown("---")
     
