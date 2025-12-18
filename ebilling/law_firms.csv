@@ -1,0 +1,11 @@
+firm_name,partner_rate,associate_rate,paralegal_rate,status,payment_terms,practice_area,contact_email
+"Baker & Sterling LLP",650,425,175,active,net_30,litigation,billing@bakersterling.com
+"Chen Associates",550,375,150,active,net_45,corporate,invoices@chenassociates.com
+"Donovan Legal Group",600,400,165,active,net_30,ip_patent,ap@donovanlegal.com
+"Fitzgerald & Moore",525,350,145,inactive,net_30,employment,billing@fitzmoore.com
+"Goldman Hart LLP",700,450,185,active,net_60,litigation,finance@goldmanhart.com
+"Harrison Burke PC",575,380,155,active,net_45,real_estate,invoices@harrisonburke.com
+"Irving & Associates",490,320,140,active,net_30,corporate,billing@irvinglaw.com
+"Jensen McCord LLP",625,410,170,inactive,net_30,ip_patent,ap@jensenmccord.com
+"Kirkland Shaw Group",675,440,180,active,net_45,litigation,invoices@kirklandshaw.com
+"Lambert & Price",510,340,145,active,net_30,employment,billing@lambertprice.com

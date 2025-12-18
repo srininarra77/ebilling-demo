@@ -1,0 +1,153 @@
+[
+  {
+    "invoice_id": "INV-2025-001",
+    "firm_name": "Baker & Sterling LLP",
+    "invoice_date": "2025-01-15",
+    "matter": "Acme Corp v. Widget Inc - Litigation",
+    "matter_id": "MTR-2024-0042",
+    "line_items": [
+      {
+        "timekeeper": "Sarah Chen",
+        "level": "partner",
+        "description": "Review motion to dismiss; conference with client",
+        "hours": 4.5,
+        "rate": 650,
+        "amount": 2925.00
+      },
+      {
+        "timekeeper": "James Wilson",
+        "level": "associate",
+        "description": "Legal research on statute of limitations; draft memo",
+        "hours": 8.0,
+        "rate": 425,
+        "amount": 3400.00
+      },
+      {
+        "timekeeper": "Maria Garcia",
+        "level": "paralegal",
+        "description": "Document review and indexing",
+        "hours": 12.0,
+        "rate": 175,
+        "amount": 2100.00
+      }
+    ],
+    "total_hours": 24.5,
+    "total_amount": 8425.00
+  },
+  {
+    "invoice_id": "INV-2025-002",
+    "firm_name": "Goldman Hart LLP",
+    "invoice_date": "2025-01-18",
+    "matter": "Acme Corp - Securities Filing",
+    "matter_id": "MTR-2024-0089",
+    "line_items": [
+      {
+        "timekeeper": "Robert Hart",
+        "level": "partner",
+        "description": "Review SEC filing; calls with CFO",
+        "hours": 6.0,
+        "rate": 750,
+        "amount": 4500.00
+      },
+      {
+        "timekeeper": "Emily Brown",
+        "level": "associate",
+        "description": "Draft disclosure sections; research requirements",
+        "hours": 15.0,
+        "rate": 450,
+        "amount": 6750.00
+      }
+    ],
+    "total_hours": 21.0,
+    "total_amount": 11250.00
+  },
+  {
+    "invoice_id": "INV-2025-003",
+    "firm_name": "Chen Associates",
+    "invoice_date": "2025-01-20",
+    "matter": "Acme Corp - M&A Due Diligence",
+    "matter_id": "MTR-2025-0003",
+    "line_items": [
+      {
+        "timekeeper": "David Chen",
+        "level": "partner",
+        "description": "Lead due diligence review; negotiate key terms",
+        "hours": 10.0,
+        "rate": 550,
+        "amount": 5500.00
+      },
+      {
+        "timekeeper": "Lisa Park",
+        "level": "associate",
+        "description": "Contract review and analysis",
+        "hours": 20.0,
+        "rate": 375,
+        "amount": 7500.00
+      },
+      {
+        "timekeeper": "Tom Martinez",
+        "level": "paralegal",
+        "description": "Organize data room; document management",
+        "hours": 25.0,
+        "rate": 150,
+        "amount": 3750.00
+      }
+    ],
+    "total_hours": 55.0,
+    "total_amount": 16750.00
+  },
+  {
+    "invoice_id": "INV-2025-004",
+    "firm_name": "Fitzgerald & Moore",
+    "invoice_date": "2025-01-22",
+    "matter": "Acme Corp - Employment Dispute",
+    "matter_id": "MTR-2024-0156",
+    "line_items": [
+      {
+        "timekeeper": "Anne Fitzgerald",
+        "level": "partner",
+        "description": "Mediation preparation and attendance",
+        "hours": 8.0,
+        "rate": 525,
+        "amount": 4200.00
+      },
+      {
+        "timekeeper": "Kevin Moore",
+        "level": "associate",
+        "description": "Draft settlement agreement",
+        "hours": 6.0,
+        "rate": 350,
+        "amount": 2100.00
+      }
+    ],
+    "total_hours": 14.0,
+    "total_amount": 6300.00
+  },
+  {
+    "invoice_id": "INV-2025-005",
+    "firm_name": "Baker & Sterling LLP",
+    "invoice_date": "2025-01-25",
+    "matter": "Acme Corp v. Widget Inc - Litigation",
+    "matter_id": "MTR-2024-0042",
+    "line_items": [
+      {
+        "timekeeper": "Sarah Chen",
+        "level": "partner",
+        "description": "Deposition preparation; witness interviews",
+        "hours": 5.0,
+        "rate": 700,
+        "amount": 3500.00
+      },
+      {
+        "timekeeper": "James Wilson",
+        "level": "associate",
+        "description": "Draft discovery responses",
+        "hours": 10.0,
+        "rate": 425,
+        "amount": 4250.00
+      }
+    ],
+    "total_hours": 15.0,
+    "total_amount": 7750.00
+  }
+]

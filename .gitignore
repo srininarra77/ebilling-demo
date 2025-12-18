@@ -1,0 +1,6 @@
+__pycache__/
+*.pyc
+vendor_database.json
+matter_assignments.json
+ap_notifications.json
+.DS_Store

@@ -1,0 +1,16 @@
+matter_id,matter_name,case_type,client,opposing_party,date_opened,priority,estimated_value,outside_counsel
+MTR-2025-001,Widget Patent Dispute,patent_infringement,Acme Corp,Widget Inc,2025-01-05,high,5000000,Baker & Sterling LLP
+MTR-2025-002,Annual SEC Filing,regulatory,Acme Corp,,2025-01-08,medium,0,Goldman Hart LLP
+MTR-2025-003,TechStart Acquisition,m&a,Acme Corp,TechStart Inc,2025-01-10,high,25000000,Chen Associates
+MTR-2025-004,Employee Discrimination Claim,employment,Acme Corp,John Smith,2025-01-12,high,500000,Lambert & Price
+MTR-2025-005,Vendor Contract Dispute,litigation,Acme Corp,SupplyCo LLC,2025-01-15,medium,750000,Baker & Sterling LLP
+MTR-2025-006,Software License Review,contract_review,Acme Corp,,2025-01-16,low,0,
+MTR-2025-007,DataCorp Merger,m&a,Acme Corp,DataCorp,2025-01-18,high,50000000,Chen Associates
+MTR-2025-008,Trademark Opposition,ip_trademark,Acme Corp,BrandCo,2025-01-20,medium,100000,Donovan Legal Group
+MTR-2025-009,Wrongful Termination Suit,employment,Acme Corp,Jane Doe,2025-01-22,high,350000,Lambert & Price
+MTR-2025-010,Product Liability Claim,litigation,Acme Corp,Consumer Group,2025-01-25,high,2000000,Kirkland Shaw Group
+MTR-2025-011,Office Lease Renewal,real_estate,Acme Corp,,2025-01-26,low,0,Harrison Burke PC
+MTR-2025-012,Competitor Trade Secret Theft,litigation,Acme Corp,RivalTech Inc,2025-01-28,high,10000000,Baker & Sterling LLP
+MTR-2025-013,GDPR Compliance Review,regulatory,Acme Corp,,2025-01-29,medium,0,
+MTR-2025-014,Joint Venture Agreement,m&a,Acme Corp,PartnerCo,2025-01-30,medium,15000000,Chen Associates
+MTR-2025-015,Sales Rep Noncompete Dispute,employment,Acme Corp,Former Employee,2025-02-01,medium,200000,
