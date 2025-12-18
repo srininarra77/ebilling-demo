@@ -2,82 +2,82 @@
   "lawyers": [
     {
       "lawyer_id": "LAW-001",
-      "name": "Michael Torres",
-      "title": "Senior Counsel",
+      "name": "Priya Sharma",
+      "title": "Senior Litigation Counsel",
       "practice_areas": ["litigation", "patent_infringement"],
       "current_caseload": 2,
       "max_caseload": 8,
-      "email": "mtorres@acmecorp.com",
+      "email": "psharma@acmecorp.com",
       "status": "active"
     },
     {
       "lawyer_id": "LAW-002",
-      "name": "Jennifer Walsh",
-      "title": "Associate General Counsel",
+      "name": "Marcus Johnson",
+      "title": "VP, Corporate Development",
       "practice_areas": ["m&a", "contract_review"],
       "current_caseload": 2,
       "max_caseload": 6,
-      "email": "jwalsh@acmecorp.com",
+      "email": "mjohnson@acmecorp.com",
       "status": "active"
     },
     {
       "lawyer_id": "LAW-003",
-      "name": "David Kim",
-      "title": "Senior Counsel",
+      "name": "Sofia Rodriguez",
+      "title": "Employment Counsel",
       "practice_areas": ["employment"],
       "current_caseload": 1,
+      "max_caseload": 8,
+      "email": "srodriguez@acmecorp.com",
+      "status": "active"
+    },
+    {
+      "lawyer_id": "LAW-004",
+      "name": "Wei Chen",
+      "title": "IP Counsel",
+      "practice_areas": ["patent_infringement", "ip_trademark"],
+      "current_caseload": 2,
+      "max_caseload": 6,
+      "email": "wchen@acmecorp.com",
+      "status": "active"
+    },
+    {
+      "lawyer_id": "LAW-005",
+      "name": "Aisha Okonkwo",
+      "title": "Deputy General Counsel",
+      "practice_areas": ["m&a", "regulatory"],
+      "current_caseload": 1,
+      "max_caseload": 5,
+      "email": "aokonkwo@acmecorp.com",
+      "status": "active"
+    },
+    {
+      "lawyer_id": "LAW-006",
+      "name": "Daniel Kim",
+      "title": "Senior Counsel",
+      "practice_areas": ["litigation", "employment"],
+      "current_caseload": 3,
       "max_caseload": 8,
       "email": "dkim@acmecorp.com",
       "status": "active"
     },
     {
-      "lawyer_id": "LAW-004",
-      "name": "Sarah Patel",
-      "title": "IP Counsel",
-      "practice_areas": ["patent_infringement", "ip_trademark"],
-      "current_caseload": 2,
-      "max_caseload": 6,
-      "email": "spatel@acmecorp.com",
-      "status": "active"
-    },
-    {
-      "lawyer_id": "LAW-005",
-      "name": "Robert Chen",
-      "title": "Deputy General Counsel",
-      "practice_areas": ["m&a", "regulatory"],
-      "current_caseload": 1,
-      "max_caseload": 5,
-      "email": "rchen@acmecorp.com",
-      "status": "active"
-    },
-    {
-      "lawyer_id": "LAW-006",
-      "name": "Amanda Foster",
-      "title": "Counsel",
-      "practice_areas": ["litigation", "employment"],
-      "current_caseload": 3,
-      "max_caseload": 8,
-      "email": "afoster@acmecorp.com",
-      "status": "active"
-    },
-    {
       "lawyer_id": "LAW-007",
-      "name": "James Mitchell",
-      "title": "Senior Counsel",
+      "name": "Rachel Goldstein",
+      "title": "Real Estate Counsel",
       "practice_areas": ["real_estate", "contract_review"],
-      "current_caseload": 2,
+      "current_caseload": 1,
       "max_caseload": 7,
-      "email": "jmitchell@acmecorp.com",
+      "email": "rgoldstein@acmecorp.com",
       "status": "active"
     },
     {
       "lawyer_id": "LAW-008",
-      "name": "Lisa Nakamura",
-      "title": "Counsel",
+      "name": "Tomás Herrera",
+      "title": "Regulatory Counsel",
       "practice_areas": ["regulatory", "contract_review"],
       "current_caseload": 3,
       "max_caseload": 8,
-      "email": "lnakamura@acmecorp.com",
+      "email": "therrera@acmecorp.com",
       "status": "on_leave"
     }
   ]
